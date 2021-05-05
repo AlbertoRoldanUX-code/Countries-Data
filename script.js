@@ -4,11 +4,12 @@ const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
 ///////////////////////////////////////
-const p = document.querySelector('.p');
 
-const img = document.querySelector('.dog');
-img.src = 'img/img-1.jpg';
-img.addEventListener('load', function () {
-  img.classList.add('fadeIn');
+const request = new XMLHttpRequest();
+request.open('GET', 'https://restcountries.eu/rest/v2/name/spain');
+request.send();
+
+request.addEventListener('load', function () {
+  const [data] = JSON.parse(this.responseText);
+  console.log(data);
 });
-p.style.width = '300px';
