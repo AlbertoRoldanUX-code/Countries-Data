@@ -29,5 +29,8 @@ request.addEventListener('load', function () {
     </div>
   </article>`;
 
-  console.log();
+  //Insert card component into page
+  countriesContainer.insertAdjacentHTML('beforeend', html);
+
+  countriesContainer.style.opacity = '1';
 });
