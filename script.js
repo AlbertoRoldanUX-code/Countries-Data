@@ -37,10 +37,10 @@ const countriesContainer = document.querySelector('.countries');
 //   });
 // };
 
-const renderCountry = function (data) {
+const renderCountry = function (data, className = '') {
   //Build card component
   const html = `
-  <article class="country">
+  <article class="country ${className}">
     <img class="country__img" src="${data.flag}" />
     <div class="country__data">
       <h3 class="country__name">${data.name}</h3>
@@ -89,7 +89,7 @@ const getCountryAndNeighbour = function (country) {
       console.log(data);
 
       //Render country 2
-      renderCountry(data);
+      renderCountry(data, 'neighbour');
     });
   });
 };
