@@ -94,8 +94,22 @@ const getCountryAndNeighbour = function (country) {
   });
 };
 
-getCountryAndNeighbour('spain');
+//Replace XML HTTP request function with a fetch API
+////////////
 
-//Create sequence of AJAX calls rendering neighbouring countries
+//Consume promise
 
-//Export functionality into its own function
+//Implement getCountryData function using a promise
+
+const getCountryData = function (country) {
+  fetch(`https://restcountries.eu/rest/v2/name/${country}`)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      renderCountry(data[0]);
+    });
+};
+
+getCountryData('france');
