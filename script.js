@@ -60,7 +60,7 @@ const renderCountry = function (data) {
 };
 
 const getCountryAndNeighbour = function (country) {
-  //Make AJAX call
+  //Make AJAX call country 1
   const request = new XMLHttpRequest();
   request.open('GET', `https://restcountries.eu/rest/v2/name/${country}`);
   request.send();
@@ -69,8 +69,28 @@ const getCountryAndNeighbour = function (country) {
   request.addEventListener('load', function () {
     const [data] = JSON.parse(this.responseText);
     console.log(data);
-    //Display data
+
+    //Render country 1
     renderCountry(data);
+
+    //Get 1º neighbour of array of neighbours
+    const [neighbour] = data.borders;
+
+    //Don't display anything if country has no neighbours
+    if (!neighbour) return;
+
+    //Make AJAX call country 2
+    const request2 = new XMLHttpRequest();
+    request2.open('GET', `https://restcountries.eu/rest/v2/alpha/${neighbour}`);
+    request2.send();
+
+    request2.addEventListener('load', function () {
+      const data = JSON.parse(this.responseText);
+      console.log(data);
+
+      //Render country 2
+      renderCountry(data);
+    });
   });
 };
 
