@@ -23,14 +23,11 @@ const renderCountry = function (data, className = '') {
 
   //Insert card component into page
   countriesContainer.insertAdjacentHTML('beforeend', html);
-
-  countriesContainer.style.opacity = '1';
 };
 
 //Create function that renders an error
 const renderError = function (msg) {
   countriesContainer.insertAdjacentText('beforeend', msg);
-  countriesContainer.style.opacity = '1';
 };
 
 const getCountryData = function (country) {
@@ -52,6 +49,10 @@ const getCountryData = function (country) {
     .catch(err => {
       console.error(`${err} 💥💥💥`);
       renderError(`Something went wrong 💥💥 ${err.message}. Try again later.`);
+    })
+    // Fade in the container no matter what kind of promise we get
+    .finally(() => {
+      countriesContainer.style.opacity = '1';
     });
 };
 
