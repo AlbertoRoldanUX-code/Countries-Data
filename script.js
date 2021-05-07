@@ -33,7 +33,12 @@ const renderError = function (msg) {
 const getCountryData = function (country) {
   //AJAX call country 1
   fetch(`https://restcountries.eu/rest/v2/name/${country}`)
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Country not found (${response.status})`);
+      }
+      return response.json();
+    })
     .then(data => {
       renderCountry(data[0]);
 
@@ -60,3 +65,9 @@ const getCountryData = function (country) {
 btn.addEventListener('click', function () {
   getCountryData('spain');
 });
+
+// Simulate another error
+
+getCountryData('jiojef');
+
+// Reject promise when no country is found with such name
