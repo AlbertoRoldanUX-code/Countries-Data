@@ -30,15 +30,22 @@ const renderError = function (msg) {
   countriesContainer.insertAdjacentText('beforeend', msg);
 };
 
+//Create helper function which wraps up the fetch, the error handling and the conversion to JSON
+const getJSON = function (url, errorMsg = 'Something went wrong') {
+  return fetch(url).then(response => {
+    if (!response.ok) {
+      throw new Error(`${errorMsg}, (${response.status})`);
+    }
+    return response.json();
+  });
+};
+
 const getCountryData = function (country) {
   //AJAX call country 1
-  fetch(`https://restcountries.eu/rest/v2/name/${country}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Country not found (${response.status})`);
-      }
-      return response.json();
-    })
+  getJSON(
+    `https://restcountries.eu/rest/v2/name/${country}`,
+    'Country not found'
+  )
     .then(data => {
       renderCountry(data[0]);
 
@@ -47,9 +54,11 @@ const getCountryData = function (country) {
       if (!neighbour) return;
 
       //2º AJAX call country 2
-      return fetch(`https://restcountries.eu/rest/v2/alpha/${neighbour}`);
+      return getJSON(
+        `https://restcountries.eu/rest/v2/alpha/${neighbour}`,
+        'Country not found'
+      );
     })
-    .then(response => response.json())
     .then(data => renderCountry(data, 'neighbour'))
     .catch(err => {
       console.error(`${err} 💥💥💥`);
@@ -66,8 +75,4 @@ btn.addEventListener('click', function () {
   getCountryData('spain');
 });
 
-// Simulate another error
-
 getCountryData('jiojef');
-
-// Reject promise when no country is found with such name
