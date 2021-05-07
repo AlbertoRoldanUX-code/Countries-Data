@@ -51,7 +51,8 @@ const getCountryData = function (country) {
 
       const neighbour = data[0].borders[0];
 
-      if (!neighbour) return;
+      //Throw a new error if there's no neighbour
+      if (!neighbour) throw new Error(`No neighbour found`);
 
       //2º AJAX call country 2
       return getJSON(
@@ -75,4 +76,4 @@ btn.addEventListener('click', function () {
   getCountryData('spain');
 });
 
-getCountryData('jiojef');
+getCountryData('Australia');
